@@ -3,7 +3,7 @@ package com.cignex.constant;
 public class Constant {
 	
 	
-	public static final String UPLOAD_DIRECTORY="G:\\SprinBoot\\MoviTicketBooking\\src\\main\\webapp\\WEB-INF\\view\\upload\\";
+	public static final String UPLOAD_DIRECTORY="G:\\SprinBoot\\MovieTicketBooking\\src\\main\\webapp\\WEB-INF\\view\\upload\\";
 	
 	/******************************************
 	 * Database Table name Constant
@@ -20,7 +20,7 @@ public class Constant {
 	 *****************************************************/
 	public static final String ADMIN_CONTROLLER_REQUEST = "/admin";
 	public static final String BOOK_TICKET_CONTROLLER_REQUEST = "/bookTicket";
-	public static final String MOVIE_CONTROLLER_REQUEST = "/Movie";
+	public static final String MOVIE_CONTROLLER_REQUEST = "/movie";
 	public static final String SCREEN_LIST_CONTROLLER_REQUEST = "/screenList";
 	public static final String USER_CONTROLLER_REQUEST = "/user";
 
@@ -73,7 +73,7 @@ public class Constant {
 	public static final String MOVIE_REGISTER_JSP = "/movie/register";
 	public static final String UPDATE_MOVIE_JSP = "/movie/update";
 	public static final String LIST_MOVIE_JSP = "/movie/allMovie";
-	public static final String REDIRECT_MOVIE = "redirect:/Movie/list";
+	public static final String REDIRECT_MOVIE = "redirect:/movie/list";
 	/******************************************
 	 * 
 	 * Constant for retruning jsp file for screenlist

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cignex.entities.Movie;
 import com.cignex.repositories.MovieRepository;
 
-@Service
+@Service("movieService")
 public class MovieService {
 	@Autowired
 	private MovieRepository movieRepository;

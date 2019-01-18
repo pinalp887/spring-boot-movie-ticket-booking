@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<a href="/movie/register">add Movie</a>
 </body>
 </html>

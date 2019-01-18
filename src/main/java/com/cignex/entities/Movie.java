@@ -1,20 +1,16 @@
 package com.cignex.entities;
 
-import java.sql.Time;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.cignex.constant.Constant;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name = Constant.MOVIE_TABLE)
@@ -27,14 +23,15 @@ public class Movie {
 	private String name;
 	@Column(name = "duration_time")
 	private String durationTime;
-	@Column(name = "total_show_per_day")
-	private Integer totalShowPerDay;
 	@Column(name = "movie_path")
 	private String moviePath;
 	@Column(name = "rate")
 	private Integer rate;
 	@Column(name = "cast")
 	private String cast;
+	
+	@OneToMany(mappedBy="movie")
+	private List<Show> show;
 
 	public Integer getId() {
 		return id;
@@ -58,14 +55,6 @@ public class Movie {
 
 	public void setDurationTime(String durationTime) {
 		this.durationTime = durationTime;
-	}
-
-	public Integer getTotalShowPerDay() {
-		return totalShowPerDay;
-	}
-
-	public void setTotalShowPerDay(Integer totalShowPerDay) {
-		this.totalShowPerDay = totalShowPerDay;
 	}
 
 	public String getMoviePath() {
