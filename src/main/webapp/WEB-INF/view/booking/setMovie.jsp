@@ -15,13 +15,9 @@
 <body>
 	<div class="container-fluid">
 	
-		<div class="row">
-			<div class="form-group">
-				<div class="col-md-6">
+	
 					<h1 align="center">set Movie</h1>
-				</div>
-			</div>
-		</div>
+				
 		<form:form action="/book/save" modelAttribute="setshow" class="form-horizontal bgcolor"
 			method="POST">
 			<div class="form-group">

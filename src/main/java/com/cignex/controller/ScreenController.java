@@ -15,27 +15,30 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.cignex.entities.Screen;
 import com.cignex.services.ScreenService;
 
-@Controller
+@RestController
 @RequestMapping("/screen")
 public class ScreenController {
 	@Autowired
 	private ScreenService screenService;
 
 	@RequestMapping("/new")
-	private String newScreen(Model model) {
+	private ModelAndView newScreen(ModelAndView model) {
 		Screen screen = new Screen();
-		model.addAttribute("screen", screen);
-		return "screen/register";
+		model.addObject("screen", screen);
+		model.setViewName("screen/register");
+		return model;
 	}
 
 	@PostMapping("/save")
-	private String saveScreen(@ModelAttribute("screen") Screen screen,
+	private ModelAndView saveScreen(@ModelAttribute("screen") Screen screen,
 			@RequestParam("platiniumSeats") String platiniumSeats, @RequestParam("silverSeats") String silverSeats,
-			@RequestParam("goldSeats") String goldSeats, HttpServletRequest request) {
+			@RequestParam("goldSeats") String goldSeats, HttpServletRequest request,ModelAndView model) {
 		int g = Integer.parseInt(goldSeats);
 		int s = Integer.parseInt(silverSeats);
 		int p = Integer.parseInt(platiniumSeats);
@@ -59,29 +62,33 @@ public class ScreenController {
 		screen.setGoldSeats(glist.toArray(new String[g]));
 		screen.setSilverSeats(slist.toArray(new String[s]));
 		screenService.save(screen);
-		return "redirect:/screen/list";
+		model.setViewName("redirect:/screen/list");
+		return model;
 	}
 
 	@GetMapping("/list")
-	private String getAllSeats(Model model) {
+	private ModelAndView getAllSeats(ModelAndView model) {
 		List<Screen> list = screenService.getAllList();
 		System.out.println(list.size());
-		model.addAttribute("list", list);
-		return "screen/allScreen";
+		model.addObject("list", list);
+		model.setViewName("screen/allScreen");
+		return model;
 	}
 
-	@GetMapping("/get")
-	private String getScreenById(@RequestParam("id") int id, Model model) {
+	@GetMapping("/get/{id}")
+	private ModelAndView getScreenById(@PathVariable("id") int id, ModelAndView model) {
 		Screen screen = screenService.getScreenById(id);
-		model.addAttribute("screen", screen);
-		return "screen/update";
+		model.addObject("screen", screen);
+		model.setViewName("screen/update");
+		return model;
 	}
 
 	@GetMapping("/delete/{id}")
-	private String deleteScreen(@PathVariable int id) {
+	private ModelAndView deleteScreen(@PathVariable int id,ModelAndView model) {
 		Screen screen = screenService.getScreenById(id);
 		screenService.delete(screen);
-		return "redirect:/screen/list";
+		model.setViewName("redirect:/screen/list");
+		return model;
 	}
 
 }

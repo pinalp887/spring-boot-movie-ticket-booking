@@ -18,13 +18,8 @@
 <body>
 	<div class="container-fluid">
 
-		<div class="row">
-			<div class="form-group">
-				<div class="col-md-6">
-					<h1 align="center">add show</h1>
-				</div>
-			</div>
-		</div>
+					<h1 align="center">Add show</h1>
+				
 		<form:form class="form-horizontal bgcolor" method="POST"
 			action="/book/shows" modelAttribute="shows">
 

@@ -12,23 +12,21 @@
 
 </head>
 <body>
-	<h1>${name}</h1>
+	<h1 align="center">Screen List</h1>
 	<div class="container">
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>Description</th>
-					<th>Target Date</th>
+					<th>Number</th>
+					<th>Screen Name</th>
 					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${list }" var="t">
-				 	<c:url value="/delete" var="deleteUrl">
-						<c:param name="id" value="${t.id }"></c:param>
+				 	<c:url value="/screen/delete/${t.id }" var="deleteUrl">
 					</c:url>
-					<c:url value="/get" var="editUrl">
-						<c:param name="id" value="${t.id }"></c:param>
+					<c:url value="/screen/get/${t.id }" var="editUrl">
 					</c:url> 
 					<tr>
 						<td>${t.id }</td>

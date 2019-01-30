@@ -12,12 +12,19 @@
 
 </head>
 <body>
+<h1 align="center">Total Shows</h1>
 <c:forEach items="${slist}" var="s">
 <c:url value="/book/getShow" var="getShow">
 	<c:param name="id" value="${s.id }"></c:param>
 </c:url>
-${s.id }
+<b><i>Book </i></b>
+<div>
+<a href="${getShow }" class="btn btn-success">${s.date } ${s.movie.name }</a>
+</div>
+
+<%-- ${s.id } --%><%-- 
 <a href="${getShow }" class="btn btn-success">${s.time }</a>
+<a href="${getShow }" class="btn btn-success">${s.date }</a> --%>
 </c:forEach>
 </body>
 </html>

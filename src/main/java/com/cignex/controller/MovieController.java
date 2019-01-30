@@ -1,6 +1,7 @@
 package com.cignex.controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
+import org.hibernate.engine.query.spi.ReturnMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.cignex.constant.Constant;
 import com.cignex.entities.Movie;
@@ -28,24 +32,25 @@ import com.cignex.services.MovieService;
 public class MovieController {
 	@Autowired
 	private MovieService movieService;
-	
-	
+
 	@GetMapping(value = Constant.HOME_PAGE_REQUEST)
-	private String home(Model model) {
+	private ModelAndView home(ModelAndView model) {
 		Movie movie = new Movie();
-		model.addAttribute("movie", movie);
-		return Constant.MOVIE_REGISTER_JSP;
+		model.addObject("movie", movie);
+		model.setViewName(Constant.MOVIE_REGISTER_JSP);
+		return model;
 	}
 
 	@GetMapping(value = Constant.REGISTER_REQUEST)
-	private String register(Model model) {
+	private ModelAndView register(ModelAndView model) {
 		Movie movie = new Movie();
-		model.addAttribute("movie", movie);
-		return Constant.MOVIE_REGISTER_JSP;
+		model.addObject("movie", movie);
+		model.setViewName(Constant.MOVIE_REGISTER_JSP);
+		return model;
 	}
 
 	@PostMapping(value = Constant.SAVE_REQUEST)
-	private String addMovie(@ModelAttribute("movie") Movie movie, Model model,
+	private ModelAndView addMovie(@ModelAttribute("movie") Movie movie, ModelAndView model,
 			@RequestParam("file") MultipartFile[] files) throws IOException {
 		Path path = null;
 		String pathh = null;
@@ -56,39 +61,40 @@ public class MovieController {
 		}
 		movie.setMoviePath(pathh);
 		movieService.save(movie);
-		return Constant.REDIRECT_MOVIE;
+		model.setViewName(Constant.REDIRECT_MOVIE);
+		return model;
 	}
 
 	@GetMapping(value = Constant.GET_ALL_DATA_REQUEST)
-	private String getAllMovie(Model model) throws IOException {
+	private ModelAndView getAllMovie(ModelAndView model) throws IOException, FileNotFoundException {
 		List<Movie> list = movieService.getAllMovie();
-		model.addAttribute("list", list);
-		String imgString=null;
-		for(Movie movie:list) {
-			File file=new File(movie.getMoviePath().toString());
-			byte[] byteImg=Files.readAllBytes(file.toPath());
-			imgString=Base64.encodeBase64String(byteImg);
+		model.addObject("list", list);
+		String imgString = null;
+		for (Movie movie : list) {
+			File file = new File(movie.getMoviePath().toString());
+			byte[] byteImg = Files.readAllBytes(file.toPath());
+			imgString = Base64.encodeBase64String(byteImg);
 			movie.setMoviePath(imgString);
 		}
-		return Constant.LIST_MOVIE_JSP;
+		model.setViewName(Constant.LIST_MOVIE_JSP);
+		return model;
 	}
 
 	@GetMapping(value = Constant.GET_BY_ID_REQUEST)
-	private String getMovieById(@RequestParam("id") int id, Model model) {
+	private ModelAndView getMovieById(@RequestParam("id") int id, ModelAndView model) {
 		Movie movie = movieService.getMovieById(id);
-		model.addAttribute("movie", movie);
-		return Constant.UPDATE_MOVIE_JSP;
+		model.addObject("movie", movie);
+		model.setViewName(Constant.UPDATE_MOVIE_JSP);
+		return model;
 	}
 
 	@GetMapping(value = Constant.DELETE_BY_ID_REQUEST)
-	private String deleteMovie(@PathVariable("id") int id) {
+	private ModelAndView deleteMovie(@PathVariable("id") int id, ModelAndView model) {
 		Movie movie = movieService.getMovieById(id);
 		File file = new File(movie.getMoviePath().toString());
 		file.delete();
 		movieService.delete(id);
-		return Constant.REDIRECT_MOVIE;
+		model.setViewName(Constant.REDIRECT_MOVIE);
+		return model;
 	}
-	
-	
-	
 }

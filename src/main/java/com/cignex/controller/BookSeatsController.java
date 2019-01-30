@@ -15,9 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.cignex.entities.Movie;
 import com.cignex.entities.Screen;
@@ -26,7 +29,7 @@ import com.cignex.services.BookSeatsService;
 import com.cignex.services.MovieService;
 import com.cignex.services.ScreenService;
 
-@Controller
+@RestController
 @RequestMapping("/book")
 public class BookSeatsController {
 	@Autowired
@@ -38,30 +41,31 @@ public class BookSeatsController {
 	private BookSeatsService bookSeatService;
 
 	@GetMapping("/setShow")
-	private String SetShow(Model model) {
+	private ModelAndView SetShow(ModelAndView model) {
 		Show setshow = new Show();
 		List<Movie> list = movieService.getAllMovie();
-		model.addAttribute("list", list);
+		model.addObject("list", list);
 		List<Screen> slist = screenService.getAllList();
-		model.addAttribute("slist", slist);
-		model.addAttribute("setshow", setshow);
-		return "booking/setMovie";
+		model.addObject("slist", slist);
+		model.addObject("setshow", setshow);
+		model.setViewName("booking/setMovie");
+		return model;
 	}
 
 	@PostMapping("/save")
-	private String show(Model model, @RequestParam("totalShow") int total, @RequestParam("movieName") String movieName,
+	private ModelAndView show(ModelAndView model, @RequestParam("totalShow") int total, @RequestParam("movieName") String movieName,
 			@RequestParam("screen") String screen, HttpServletRequest request, @RequestParam("date") Date date) {
 		request.setAttribute("movieName", movieName);
-		model.addAttribute("total", total);
-		model.addAttribute("screen", screen);
-		model.addAttribute("date", date);
-		System.out.println(total+" "+screen);
-		return "booking/showmanagement";
+		model.addObject("total", total);
+		model.addObject("screen", screen);
+		model.addObject("date", date);
+		model.setViewName("booking/showmanagement");
+		return model;
 
 	}
 
 	@PostMapping("/shows")
-	private String finalShowSet(Model model, @ModelAttribute("shows") Show show, @RequestParam("count") int count,
+	private ModelAndView finalShowSet(ModelAndView model, @ModelAttribute("shows") Show show, @RequestParam("count") int count,
 			HttpServletRequest request, @RequestParam("movieName") int id, @RequestParam("screen") int sid,
 			@RequestParam("date") Date date) {
 		Movie movie = movieService.getMovieById(id);
@@ -73,7 +77,7 @@ public class BookSeatsController {
 		s.add(sseat);
 		s.add(pseat);
 		s.add(gseat);
-		model.addAttribute("s", s);
+		model.addObject("s", s);
 		count = Integer.parseInt(request.getParameter("count"));
 		show.setMovie(movie);
 		show.setScreen(screen);
@@ -87,25 +91,29 @@ public class BookSeatsController {
 			show.setId(i);
 			bookSeatService.save(show);
 		}
-		return "booking/totalShow";
+		model.setViewName("redirect:/book/getMovieShows");
+		return model;
 	}
 
+	
 	@GetMapping("/getMovieShows")
-	public String getMovieShows(Model model) {
+	public ModelAndView getMovieShows(ModelAndView model) {
 		List<Show> slist = bookSeatService.getAllShows();
-		model.addAttribute("slist", slist);
-		return "booking/totalShow";
+		model.addObject("slist", slist);
+		model.setViewName("booking/totalShow");
+		return model;
 	}
 
 	@GetMapping("/getShow")
-	public String getMovieShowById(int id, Model model) throws Exception {
+	public ModelAndView getMovieShowById(int id, ModelAndView model){
 		Show show = bookSeatService.getShowById(id);
-		model.addAttribute("show", show);
-		return "booking/getShow";
+		model.addObject("show", show);
+		model.setViewName("booking/getShow");
+		return model;
 	}
 
 	@PostMapping("/bookT")
-	public String bookSeats(@ModelAttribute("show") Show show, Model model,HttpServletRequest request) {
+	public ModelAndView bookSeats(@ModelAttribute("show") Show show, ModelAndView model,HttpServletRequest request) {
 		show=bookSeatService.getShowById(show.getId());
 		List<String> seats=new ArrayList<>();
 		if(show.getBookedSeats()!=null) {
@@ -121,7 +129,8 @@ public class BookSeatsController {
 		});
 		String[] bookedSeats = seats.stream().toArray(String[]::new);
 		bookSeatService.upShowById(show.getId(), bookedSeats);
-		return "redirect:/book/getMovieShows";
+		model.setViewName("redirect:/book/getMovieShows");
+		return model;
 	}
 
 }

@@ -12,6 +12,7 @@
 
 </head>
 <body>
+	<h1 align="center">Movie List</h1>
 	<div class="container">
 
 
