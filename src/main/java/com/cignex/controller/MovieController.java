@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.commons.codec.binary.Base64;
 import org.hibernate.engine.query.spi.ReturnMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,6 @@ import com.cignex.services.MovieService;
 public class MovieController {
 	@Autowired
 	private MovieService movieService;
-
 	@GetMapping(value = Constant.HOME_PAGE_REQUEST)
 	private ModelAndView home(ModelAndView model) {
 		Movie movie = new Movie();
@@ -40,7 +40,6 @@ public class MovieController {
 		model.setViewName(Constant.MOVIE_REGISTER_JSP);
 		return model;
 	}
-
 	@GetMapping(value = Constant.REGISTER_REQUEST)
 	private ModelAndView register(ModelAndView model) {
 		Movie movie = new Movie();
@@ -48,7 +47,6 @@ public class MovieController {
 		model.setViewName(Constant.MOVIE_REGISTER_JSP);
 		return model;
 	}
-
 	@PostMapping(value = Constant.SAVE_REQUEST)
 	private ModelAndView addMovie(@ModelAttribute("movie") Movie movie, ModelAndView model,
 			@RequestParam("file") MultipartFile[] files) throws IOException {
@@ -79,7 +77,6 @@ public class MovieController {
 		model.setViewName(Constant.LIST_MOVIE_JSP);
 		return model;
 	}
-
 	@GetMapping(value = Constant.GET_BY_ID_REQUEST)
 	private ModelAndView getMovieById(@RequestParam("id") int id, ModelAndView model) {
 		Movie movie = movieService.getMovieById(id);

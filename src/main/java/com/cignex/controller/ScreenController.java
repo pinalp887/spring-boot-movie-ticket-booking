@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,6 @@ import com.cignex.services.ScreenService;
 public class ScreenController {
 	@Autowired
 	private ScreenService screenService;
-
 	@RequestMapping("/new")
 	private ModelAndView newScreen(ModelAndView model) {
 		Screen screen = new Screen();
@@ -34,7 +34,6 @@ public class ScreenController {
 		model.setViewName("screen/register");
 		return model;
 	}
-
 	@PostMapping("/save")
 	private ModelAndView saveScreen(@ModelAttribute("screen") Screen screen,
 			@RequestParam("platiniumSeats") String platiniumSeats, @RequestParam("silverSeats") String silverSeats,
@@ -65,7 +64,7 @@ public class ScreenController {
 		model.setViewName("redirect:/screen/list");
 		return model;
 	}
-
+	
 	@GetMapping("/list")
 	private ModelAndView getAllSeats(ModelAndView model) {
 		List<Screen> list = screenService.getAllList();
@@ -74,7 +73,6 @@ public class ScreenController {
 		model.setViewName("screen/allScreen");
 		return model;
 	}
-
 	@GetMapping("/get/{id}")
 	private ModelAndView getScreenById(@PathVariable("id") int id, ModelAndView model) {
 		Screen screen = screenService.getScreenById(id);
@@ -82,7 +80,6 @@ public class ScreenController {
 		model.setViewName("screen/update");
 		return model;
 	}
-
 	@GetMapping("/delete/{id}")
 	private ModelAndView deleteScreen(@PathVariable int id,ModelAndView model) {
 		Screen screen = screenService.getScreenById(id);

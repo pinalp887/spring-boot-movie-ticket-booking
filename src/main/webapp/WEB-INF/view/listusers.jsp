@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="../header.jsp"%>
+<%@ include file="header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,20 +19,25 @@
 				<tr>
 					<th>id</th>
 					<th>name</th>
+					<th>last Name</th>
+					<th>Email</th>
+					<th>Password</th>
 					<th>Action</th>
 
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${list }" var="t">
-					<c:url value="/screen/delete/${t.id }" var="deleteUrl">
+					<c:url value="/register/delete/${t.id }" var="deleteUrl">
 					</c:url>
-					<c:url value="/screen/get/${t.id }" var="editUrl">
+					<c:url value="/register/get/${t.id }" var="editUrl">
 					</c:url>
 					<tr>
 						<td>${t.id }</td>
-						<td>${t.screenName }</td>
-						
+						<td>${t.name }</td>
+						<td>${t.lastName }</td>
+						<td>${t.email }</td>
+						<td>${t.password }</td>
 
 						<td><a type="button" class="btn btn-primary btn-rounded"
 							href="${editUrl }">EDIT</a> <a type="button"

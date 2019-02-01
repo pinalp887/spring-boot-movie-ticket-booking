@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,11 +40,12 @@ public class BookSeatsController {
 	private MovieService movieService;
 	@Autowired
 	private BookSeatsService bookSeatService;
-
+	
 	@GetMapping("/setShow")
 	private ModelAndView SetShow(ModelAndView model) {
 		Show setshow = new Show();
 		List<Movie> list = movieService.getAllMovie();
+		System.out.println(list.size());
 		model.addObject("list", list);
 		List<Screen> slist = screenService.getAllList();
 		model.addObject("slist", slist);
@@ -95,7 +97,6 @@ public class BookSeatsController {
 		return model;
 	}
 
-	
 	@GetMapping("/getMovieShows")
 	public ModelAndView getMovieShows(ModelAndView model) {
 		List<Show> slist = bookSeatService.getAllShows();
@@ -103,7 +104,6 @@ public class BookSeatsController {
 		model.setViewName("booking/totalShow");
 		return model;
 	}
-
 	@GetMapping("/getShow")
 	public ModelAndView getMovieShowById(int id, ModelAndView model){
 		Show show = bookSeatService.getShowById(id);
