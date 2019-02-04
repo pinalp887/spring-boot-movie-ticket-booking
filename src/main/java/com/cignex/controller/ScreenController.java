@@ -17,16 +17,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cignex.entities.Screen;
+import com.cignex.exception.ScreenNotFoundException;
 import com.cignex.services.ScreenService;
 
 @RestController
 @RequestMapping("/screen")
+@SessionAttributes({ "name", "id", "role" })
 public class ScreenController {
 	@Autowired
 	private ScreenService screenService;
+
 	@RequestMapping("/new")
 	private ModelAndView newScreen(ModelAndView model) {
 		Screen screen = new Screen();
@@ -34,10 +38,11 @@ public class ScreenController {
 		model.setViewName("screen/register");
 		return model;
 	}
+
 	@PostMapping("/save")
 	private ModelAndView saveScreen(@ModelAttribute("screen") Screen screen,
 			@RequestParam("platiniumSeats") String platiniumSeats, @RequestParam("silverSeats") String silverSeats,
-			@RequestParam("goldSeats") String goldSeats, HttpServletRequest request,ModelAndView model) {
+			@RequestParam("goldSeats") String goldSeats, HttpServletRequest request, ModelAndView model) {
 		int g = Integer.parseInt(goldSeats);
 		int s = Integer.parseInt(silverSeats);
 		int p = Integer.parseInt(platiniumSeats);
@@ -64,24 +69,31 @@ public class ScreenController {
 		model.setViewName("redirect:/screen/list");
 		return model;
 	}
-	
+
 	@GetMapping("/list")
 	private ModelAndView getAllSeats(ModelAndView model) {
 		List<Screen> list = screenService.getAllList();
-		System.out.println(list.size());
+		if (list == null) {
+			throw new ScreenNotFoundException("Sreens are not founded");
+		}
 		model.addObject("list", list);
 		model.setViewName("screen/allScreen");
 		return model;
 	}
+
 	@GetMapping("/get/{id}")
 	private ModelAndView getScreenById(@PathVariable("id") int id, ModelAndView model) {
 		Screen screen = screenService.getScreenById(id);
+		if (screen == null) {
+			throw new ScreenNotFoundException(" screen is not found with id " +id);
+		}
 		model.addObject("screen", screen);
 		model.setViewName("screen/update");
 		return model;
 	}
+
 	@GetMapping("/delete/{id}")
-	private ModelAndView deleteScreen(@PathVariable int id,ModelAndView model) {
+	private ModelAndView deleteScreen(@PathVariable int id, ModelAndView model) {
 		Screen screen = screenService.getScreenById(id);
 		screenService.delete(screen);
 		model.setViewName("redirect:/screen/list");

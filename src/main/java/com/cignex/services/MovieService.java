@@ -17,7 +17,7 @@ public class MovieService {
 	public void save(Movie movie) {
 		movieRepository.save(movie);
 	}
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	public List<Movie> getAllMovie(){
 		List<Movie> list=movieRepository.findAll();
 		return list;

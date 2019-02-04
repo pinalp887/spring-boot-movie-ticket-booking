@@ -12,13 +12,13 @@ import com.cignex.repositories.RoleRepository;
 public class RoleService {
 	@Autowired
 	private RoleRepository repository;
-	
-	public List<Role> getRoles(){
+
+	public List<Role> getRoles() {
 		return repository.findAll();
 	}
+
 	public Role getRoleById(int id) {
-		
 		return repository.findById(id).get();
 	}
-	
+
 }

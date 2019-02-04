@@ -28,9 +28,9 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${list }" var="t">
-					<c:url value="/register/delete/${t.id }" var="deleteUrl">
+					<c:url value="/user/delete/${t.id }" var="deleteUrl">
 					</c:url>
-					<c:url value="/register/get/${t.id }" var="editUrl">
+					<c:url value="/user/get/${t.id }" var="editUrl">
 					</c:url>
 					<tr>
 						<td>${t.id }</td>

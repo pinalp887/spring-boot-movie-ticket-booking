@@ -23,7 +23,7 @@ public class UserService {
 	public List<User> getAll() {
 		return repository.findAll();
 	}
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	public User getUserById(int id) {
 		return repository.findById(id).get();
 	}

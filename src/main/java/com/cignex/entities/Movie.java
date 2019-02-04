@@ -2,6 +2,7 @@ package com.cignex.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +32,9 @@ public class Movie {
 	private String cast;
 	
 	@OneToMany(mappedBy="movie")
+	private List<UserBooked> booked;
+	
+	@OneToMany(mappedBy="movie",cascade=CascadeType.ALL)
 	private List<Show> show;
 
 	public Integer getId() {

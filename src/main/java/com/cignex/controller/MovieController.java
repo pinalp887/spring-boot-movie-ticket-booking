@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,6 +31,7 @@ import com.cignex.services.MovieService;
 
 @Controller
 @RequestMapping(value = Constant.MOVIE_CONTROLLER_REQUEST)
+@SessionAttributes({"name","id","role"})
 public class MovieController {
 	@Autowired
 	private MovieService movieService;

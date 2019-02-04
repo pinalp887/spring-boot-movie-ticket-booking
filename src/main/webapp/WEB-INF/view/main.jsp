@@ -37,7 +37,7 @@
           <br />
           <p>The page you requested could not be authorize to you, either contact your admin or try again. Use your browsers <b>Back</b> button to navigate to the page you have previously come from</p>
           <p><b>Or you could just press this neat little button:</b></p>
-          <a href="/book/getMovieShows" class="btn btn-large btn-info"><i class="icon-home icon-white"></i> Take Me Home</a>
+          <a href="/book/datewise" class="btn btn-large btn-info"><i class="icon-home icon-white"></i> Take Me Home</a>
         </div>
         <br />
       

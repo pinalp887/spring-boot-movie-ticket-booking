@@ -26,6 +26,10 @@ public class CustomUserDetails implements UserDetails {
 				.collect(Collectors.toList());
 	}
 
+	public int getId() {
+		return user.getId();
+	}
+	
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub

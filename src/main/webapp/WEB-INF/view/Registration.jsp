@@ -32,7 +32,7 @@
 	<div class="container-fluid">
 		<div class="container">
 			<form:form class="form-horizontal bgcolor" method="POST"
-				action="/register/save" modelAttribute="user">
+				action="/user/save" modelAttribute="user">
 				<div class="row">
 					<div class="col-md-3"></div>
 					<div class="col-md-6">
@@ -136,9 +136,9 @@
 									<i class="fa fa-key"></i>
 								</div>
 								<form:select path="roles" class="form-control">
-									<c:forEach items="${list }" var="l">
-										<form:option value="${l.roleId}">${l.role }</form:option>
-									</c:forEach>
+								
+										<form:option value="${list.roleId}">${list.role }</form:option>
+								
 								</form:select>
 							</div>
 						</div>

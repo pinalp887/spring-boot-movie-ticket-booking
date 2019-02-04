@@ -17,7 +17,7 @@
 	<div class="container-fluid">
 		<div class="container">
 			<form:form class="form-horizontal bgcolor" method="POST"
-				action="/register/save" modelAttribute="user">
+				action="/user/save" modelAttribute="user">
 				<form:hidden path="id"/>
 				<div class="row">
 					<div class="col-md-3"></div>

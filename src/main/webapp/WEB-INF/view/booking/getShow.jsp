@@ -26,6 +26,11 @@
 	rel="stylesheet">
 <script
 	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<style type="text/css">
+#tickets {
+	display: none;
+}
+</style>
 </head>
 <body>
 
@@ -54,21 +59,58 @@
 			<img
 				class="pinned-repo-item p-3 mb-3 border border-gray-dark rounded-1 public source"
 				width="250" height="200" src="data:image/png;base64,<%=imgString%>"
-				border="20px"  ontoggle=""/>
+				border="20px" ontoggle="" />
 
 		</div>
 	</div>
+	<button type="button" id="tickets" class="btn btn-primary"
+		data-toggle="modal" data-target="#exampleModal">Launch demo
+		modal</button>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Enter Number Of
+						seats</h5>
+					<button type="button" id="close" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="recipient-name" class="col-form-label">Total
+								Seats:</label> <input type="number" class="form-control" id="seats" autofocus="autofocus">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="total" class="btn btn-primary">Save
+						changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="container">
 		<div class="row">
 
 			<div class="col-sm-10">
 				<!-- Default unchecked -->
 				<div class="check">
-					<form:form action="/book/bookT" method="post" modelAttribute="show">
+					<!-- action="/book/bookT" -->
+					<%-- 	<form:form  method="post" modelAttribute="show"
+						id="bookForm"> --%>
+					<form:form action="/book/bookT" method="post" modelAttribute="show"
+						id="bookForm">
 						<form:hidden path="id" />
 						<b><i>Platinium Seats</i></b>
 						<div style="border: thin solid black;">
-						
+
 							<%
 								for (int i = 1; i <= ps.size(); i++) {
 										if (bs.contains("p" + i)) {
@@ -81,9 +123,10 @@
 							<%
 								} else {
 							%>
-							<input type="checkbox" data-toggle="toggle" data-on="booked<br>"
-								data-off="p<%=i%><br>" data-size="mini" name="p<%=i%>" id="book"
-								value="p<%=i%>"> &nbsp;&nbsp;&nbsp;
+							<input type="checkbox" class="platinium" data-toggle="toggle"
+								data-on="booked<br>" data-off="p<%=i%><br>" data-size="mini"
+								name="p<%=i%>" id="book" value="p<%=i%>">
+							&nbsp;&nbsp;&nbsp;
 							<%
 								}
 							%>
@@ -106,7 +149,7 @@
 							<%
 								} else {
 							%>
-							<input type="checkbox" data-toggle="toggle" data-on="booked<br>"
+							<input type="checkbox" class="silver" data-toggle="toggle" data-on="booked<br>"
 								data-off="s<%=i%><br>" data-size="mini" name="s<%=i%>" id="book"
 								value="s<%=i%>"> &nbsp;&nbsp;&nbsp;
 							<%
@@ -131,7 +174,7 @@
 							<%
 								} else {
 							%>
-							<input type="checkbox" data-toggle="toggle" data-on="booked<br>"
+							<input type="checkbox" class="gold" data-toggle="toggle" data-on="booked<br>"
 								data-off="g<%=i%><br>" data-size="mini" name="g<%=i%>" id="book"
 								value="g<%=i%>"> &nbsp;&nbsp;&nbsp;
 							<%
@@ -142,11 +185,93 @@
 								}
 							%>
 						</div>
-						<input type="submit" class="btn btn-sucess" value="save">
+						<form:hidden path="time"/>
+						<form:hidden path="date"/>
+						<form:hidden path="movie.name"/>
+						<form:hidden path="screen.screenName"/>
+						
+						<input type="submit" id="save" class="btn btn-sucess" value="save">
 					</form:form>
 				</div>
 			</div>
 		</div>
 	</div>
+
 </body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		//countcheck();
+		//totalChecked();
+		$("#tickets").trigger('click');
+		$('#bookForm').hide();
+		$('#total').click(function() {
+			var total = $('#seats').val();
+			$('#bookForm').show();
+			$("#close").trigger('click');
+			$('input[name="totaLSeats"]').val(total);
+
+		});
+		var checked = 0;
+		var total = 0;
+		$('.platinium').change(function() {
+			total = $('#totalseats').val();
+			checked = checked + 1;
+
+		});
+		$('.silver').change(function() {
+			total = $('#totalseats').val();
+			checked = checked + 1;
+
+		});
+		$('.gold').change(function() {
+			total = $('#totalseats').val();
+			checked = checked + 1;
+
+		});
+		$('#save').click(function() {
+			if (total < checked) {
+				alert("you can select only " + total + " seats");
+				location.reload();
+				return false;
+			} else if (total > checked) {
+				alert("you have to select total " + total + " seats");
+				location.reload();
+				return false;
+			} else {
+				console.log("done");
+			}
+		});
+
+		/* 	var count=0;
+			function countcheck(){
+				count=$("input[type='checkbox']").length;
+				console.log(count);
+			}
+			var checked=0;
+			function totalChecked(){
+				checked=$(".platinium").change(function(){
+					checked=checked+1;
+					alert(checked);
+				});
+				console.log(checked);
+			} */
+		$('#save').click(function() {
+
+		});
+
+	});
+	/* $('#Mybtn').click(function() {
+		$('#exampleModal').model('toggle');
+	}); */
+
+	/* $('.platinium').change(function(){
+			var val=$(this).val();
+			//alert(val);
+			var count=0;
+			for(var i=1;i<5;i++){
+				count++;
+				alert(count);
+			}
+		}); */
+</script>
 </html>

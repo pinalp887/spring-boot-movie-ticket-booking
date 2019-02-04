@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="../header.jsp" %>
+<%@ include file="../header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,16 +14,14 @@
 </head>
 <body>
 	<div class="container-fluid">
-	
-	
-					<h1 align="center">set Movie</h1>
-				
-		<form:form action="/book/save" modelAttribute="setshow" class="form-horizontal bgcolor"
-			method="POST">
+		<h1 align="center">Set Movie Show</h1>
+
+		<form:form action="/book/save" modelAttribute="setshow"
+			class="form-horizontal bgcolor" method="POST">
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="movieName">Movie
 					Name :</label>
-				<div >
+				<div>
 					<select name="movieName" class="form-control">
 						<option value=""></option>
 						<c:forEach items="${list }" var="l">
@@ -35,15 +33,15 @@
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="totalShow">totalShow
 				</label>
-				<div >
+				<div>
 					<input type="number" class="form-control" id="totalShow"
-						name="totalShow" >
+						name="totalShow">
 				</div>
 			</div>
 			<div class="form-group1"></div>
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="date">date </label>
-				<div >
+				<div>
 
 					<input type="date" class="form-control" id="datetimepicker"
 						name="date" />
@@ -51,7 +49,7 @@
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="screen">screen </label>
-				<div >
+				<div>
 					<select name="screen" class="form-control">
 						<option value=""></option>
 						<c:forEach items="${slist }" var="l">
