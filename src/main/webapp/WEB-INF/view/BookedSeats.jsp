@@ -24,6 +24,7 @@
 					<th>Date</th>
 					<th>Time</th>
 					<th>BookedSeats</th>
+					<th>Total</th>
 				</tr>
 			<tbody>
 	<%
@@ -42,6 +43,7 @@
 					<td><%= u.getDate() %></td>
 					<td><%= u.getTime() %></td>
 					<td><%= bs %></td>
+					<td><%= u.getTotal() %></td>
 					
 				</tr>
 			</tbody>

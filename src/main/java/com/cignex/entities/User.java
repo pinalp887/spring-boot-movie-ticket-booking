@@ -39,6 +39,22 @@ public class User {
 	@ManyToMany(fetch=FetchType.EAGER)
 	private Set<Role> roles;
 	private String token;
+	private String unique;
+	
+
+	/**
+	 * @return the unique
+	 */
+	public String getUnique() {
+		return unique;
+	}
+
+	/**
+	 * @param unique the unique to set
+	 */
+	public void setUnique(String unique) {
+		this.unique = unique;
+	}
 
 	/**
 	 * @return the id

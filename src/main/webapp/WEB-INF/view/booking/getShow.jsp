@@ -38,7 +38,9 @@
 		Show show = (Show) request.getAttribute("show");
 		Movie movie = show.getMovie();
 		int id = show.getId();
-
+		int m1 = show.getPlatiniumPrice();
+		int m2 = show.getSilverPrice();
+		int m3 = show.getGoldPrice();
 		String name = movie.getName();
 		Screen screen = show.getScreen();
 		List<String> gs = Arrays.asList(screen.getGoldSeats());
@@ -84,7 +86,8 @@
 					<div class="modal-body">
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">Total
-								Seats:</label> <input type="number" class="form-control" id="seats" autofocus="autofocus">
+								Seats:</label> <input type="number" class="form-control" id="seats"
+								autofocus="autofocus">
 						</div>
 					</div>
 				</div>
@@ -108,6 +111,9 @@
 					<form:form action="/book/bookT" method="post" modelAttribute="show"
 						id="bookForm">
 						<form:hidden path="id" />
+						<input type="hidden" id="m1" name="m1" value="<%=m1%>">
+						<input type="hidden" id="m2" name="m2" value="<%=m2%>">
+						<input type="hidden" id="m3" name="m3" value="<%=m3%>">
 						<b><i>Platinium Seats</i></b>
 						<div style="border: thin solid black;">
 
@@ -149,9 +155,10 @@
 							<%
 								} else {
 							%>
-							<input type="checkbox" class="silver" data-toggle="toggle" data-on="booked<br>"
-								data-off="s<%=i%><br>" data-size="mini" name="s<%=i%>" id="book"
-								value="s<%=i%>"> &nbsp;&nbsp;&nbsp;
+							<input type="checkbox" class="silver" data-toggle="toggle"
+								data-on="booked<br>" data-off="s<%=i%><br>" data-size="mini"
+								name="s<%=i%>" id="book" value="s<%=i%>">
+							&nbsp;&nbsp;&nbsp;
 							<%
 								}
 							%>
@@ -174,9 +181,10 @@
 							<%
 								} else {
 							%>
-							<input type="checkbox" class="gold" data-toggle="toggle" data-on="booked<br>"
-								data-off="g<%=i%><br>" data-size="mini" name="g<%=i%>" id="book"
-								value="g<%=i%>"> &nbsp;&nbsp;&nbsp;
+							<input type="checkbox" class="gold" data-toggle="toggle"
+								data-on="booked<br>" data-off="g<%=i%><br>" data-size="mini"
+								name="g<%=i%>" id="book" value="g<%=i%>">
+							&nbsp;&nbsp;&nbsp;
 							<%
 								}
 							%>
@@ -185,15 +193,17 @@
 								}
 							%>
 						</div>
-						<form:hidden path="time"/>
-						<form:hidden path="date"/>
-						<form:hidden path="movie.name"/>
-						<form:hidden path="screen.screenName"/>
-						
-						<input type="submit" id="save" class="btn btn-sucess" value="save">
+						<form:hidden path="time" />
+						<form:hidden path="date" />
+						<form:hidden path="movie.name" />
+						<%-- <form:hidden path="screen.screenName" /> --%>
+						<input type="hidden" name="t" id="t">
+						<input type="submit" class="amount" id="save"
+							class="btn btn-sucess" value="save">
 					</form:form>
 				</div>
 			</div>
+			<input type="hidden" name="totaLSeats" id="totaLSeats">
 		</div>
 	</div>
 
@@ -211,30 +221,64 @@
 			$('input[name="totaLSeats"]').val(total);
 
 		});
+
+		var m1 = $('#m1').val();
+		var m2 = $('#m2').val();
+		var m3 = $('#m3').val();
+
 		var checked = 0;
-		var total = 0;
+		var totals = 0;
+
 		$('.platinium').change(function() {
-			total = $('#totalseats').val();
-			checked = checked + 1;
+			totals = $('#totaLSeats').val();
+			if ($(this).prop('checked') === true) {
+				checked = checked + 1;
+				var t = checked * m1;
+				$("#t").val(t);
+			} else {
+				checked = checked - 1;
+				var t = checked * m1;
+				$("#t").val(t);
+			}
 
 		});
 		$('.silver').change(function() {
-			total = $('#totalseats').val();
-			checked = checked + 1;
+			totals = $('#totaLSeats').val();
+			if ($(this).prop('checked') === true) {
+				checked = checked + 1;
+				var t = checked * m2;
+				$("#t").val(t);
+			} else {
+				checked = checked - 1;
+				var t = checked * m2;
+				$("#t").val(t);
+			}
+			/* total = $('#totalseats').val();
+			checked = checked + 1; */
 
 		});
 		$('.gold').change(function() {
-			total = $('#totalseats').val();
-			checked = checked + 1;
+			totals = $('#totaLSeats').val();
+			if ($(this).prop('checked') === true) {
+				checked = checked + 1;
+				var t = checked * m3;
+				$("#t").val(t);
+			} else {
+				checked = checked - 1;
+				var t = checked * m3;
+				$("#t").val(t);
+			}
+			/* total = $('#totalseats').val();
+			checked = checked + 1; */
 
 		});
 		$('#save').click(function() {
-			if (total < checked) {
-				alert("you can select only " + total + " seats");
+			if (totals < checked) {
+				alert("you can select only " + totals + " seats");
 				location.reload();
 				return false;
-			} else if (total > checked) {
-				alert("you have to select total " + total + " seats");
+			} else if (totals > checked) {
+				alert("you have to select total " + totals + " seats");
 				location.reload();
 				return false;
 			} else {

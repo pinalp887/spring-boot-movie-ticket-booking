@@ -61,6 +61,10 @@
 						<li class="nav-item"><a class="nav-link"
 							href="/book/datewise"><i class="fa fa-film"> Book Seats</i></a></li>
 					</ul>
+					<ul class="navbar-nav">
+						<li class="nav-item"><a class="nav-link"
+							href="/user/booked"><i class="fa fa-folder-open"> Booked Seats</i></a></li>
+					</ul>
 				</c:when>
 				<c:when test="${role == role2 }">
 					<ul class="navbar-nav">

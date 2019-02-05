@@ -21,6 +21,7 @@ public class UserBooked {
 	private String[] bookedSeats;
 	private Date date;
 	private Time time;
+	private int total;
 	@ManyToOne
 	private Movie movie;
 	@ManyToOne
@@ -31,6 +32,20 @@ public class UserBooked {
 	@ManyToOne
 	private Show show;
 	
+
+	/**
+	 * @return the total
+	 */
+	public int getTotal() {
+		return total;
+	}
+
+	/**
+	 * @param total the total to set
+	 */
+	public void setTotal(int total) {
+		this.total = total;
+	}
 
 	/**
 	 * @return the show

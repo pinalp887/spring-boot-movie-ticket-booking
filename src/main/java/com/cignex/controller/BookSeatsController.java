@@ -163,8 +163,8 @@ public class BookSeatsController {
 			if (k.contains("s"))
 				seats.add(v[0].toString());
 		});
+		int f=Integer.parseInt(request.getParameter("t"));
 		String[] bookedSeats = seats.stream().toArray(String[]::new);
-		System.out.println(bookedSeats.length);
 		int id=(int) map.get("id");
 		User user=userService.getUserById(id);
 		UserBooked booked=new UserBooked();
@@ -175,11 +175,11 @@ public class BookSeatsController {
 		booked.setTime(show.getTime());
 		booked.setBookedSeats(ubookedSeats);
 		booked.setShow(show);
+		booked.setTotal(f);
 		bookService.save(booked);
 		bookSeatService.upShowById(show.getId(), bookedSeats);
 		System.out.println(seats);
 		System.out.println(ubSeats);
-		System.out.println(bookedSeats.length);
 		model.setViewName("redirect:/book/datewise");
 		return model;
 	}
