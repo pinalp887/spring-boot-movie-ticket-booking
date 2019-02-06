@@ -35,7 +35,7 @@
 				</label>
 				<div>
 					<input type="number" class="form-control" id="totalShow"
-						name="totalShow">
+						name="totalShow" required>
 				</div>
 			</div>
 			<div class="form-group1"></div>
@@ -44,7 +44,7 @@
 				<div>
 
 					<input type="date" class="form-control" id="datetimepicker"
-						name="date" />
+						name="date" required/>
 				</div>
 			</div>
 			<div class="form-group">

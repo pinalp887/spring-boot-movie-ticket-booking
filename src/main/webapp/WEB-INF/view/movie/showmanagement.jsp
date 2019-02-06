@@ -59,28 +59,28 @@
 						time:</label>
 					<div class="col-sm-3">
 						<input type="time" class="form-control" id="showTime<%=count%>"
-							name="showTime<%=count%>" />
+							name="showTime<%=count%>" required/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="platiniumprice">platiniumprice:</label>
 					<div class="col-sm-3">
 						<input type="number" class="form-control"
-							id="platiniumprice<%=count%>" name="platiniumprice<%=count%>" />
+							id="platiniumprice<%=count%>" name="platiniumprice<%=count%>" required/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="silverPrice">silverPrice:</label>
 					<div class="col-sm-3">
 						<input type="number" class="form-control"
-							id="silverPrice<%=count%>" name="silverPrice<%=count%>" />
+							id="silverPrice<%=count%>" name="silverPrice<%=count%>" required/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="goldPrice">goldPrice:</label>
 					<div class="col-sm-3">
 						<input type="number" class="form-control" id="goldPrice<%=count%>"
-							name="goldPrice<%=count%>" />
+							name="goldPrice<%=count%>" required/>
 					</div>
 				</div>
 

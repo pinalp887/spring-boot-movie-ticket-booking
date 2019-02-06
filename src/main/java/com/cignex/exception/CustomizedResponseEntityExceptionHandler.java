@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.cignex.exception.MovieExceptions.MovieNotFoundException;
+
 @RestController
 @ControllerAdvice
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -29,10 +31,24 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
 	}
 
+	@ExceptionHandler(ShowNotFoundException.class)
+	public ResponseEntity<Object> showNOtFoundHandler(ShowNotFoundException ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getLocalizedMessage(),
+				request.getDescription(false));
+
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler(MovieNotFoundException.class)
+	public ResponseEntity<Object> movieNotFoundHandler(MovieNotFoundException ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getLocalizedMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		
+
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), "validation failed",
 				ex.getBindingResult().toString());
 

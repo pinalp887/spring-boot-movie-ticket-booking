@@ -30,6 +30,9 @@ public class CustomUserDetails implements UserDetails {
 		return user.getId();
 	}
 	
+	public String getEmail() {
+		return user.getEmail();
+	}
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub

@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.binary.Base64;
@@ -39,7 +41,9 @@ import com.cignex.entities.Screen;
 import com.cignex.entities.Show;
 import com.cignex.entities.User;
 import com.cignex.entities.UserBooked;
+import com.cignex.exception.ShowNotFoundException;
 import com.cignex.services.BookSeatsService;
+import com.cignex.services.EmailService;
 import com.cignex.services.MovieService;
 import com.cignex.services.ScreenService;
 import com.cignex.services.UserBookedService;
@@ -47,7 +51,7 @@ import com.cignex.services.UserService;
 
 @RestController
 @RequestMapping("/book")
-@SessionAttributes({ "name", "id", "role" })
+@SessionAttributes({ "name", "id", "role","email" })
 public class BookSeatsController {
 	@Autowired
 	private ScreenService screenService;
@@ -59,6 +63,8 @@ public class BookSeatsController {
 	private BookSeatsService bookSeatService;
 	@Autowired
 	private UserBookedService bookService;
+	@Autowired
+	private EmailService emailService;
 
 	@GetMapping("/setShow")
 	private ModelAndView SetShow(ModelAndView model) {
@@ -121,6 +127,9 @@ public class BookSeatsController {
 	@GetMapping("/getMovieShows")
 	public ModelAndView getMovieShows(ModelAndView model) {
 		List<Show> slist = bookSeatService.getAllShows();
+		if(slist.isEmpty()) {
+			throw new ShowNotFoundException("There were no show founded");
+		}
 		model.addObject("slist", slist);
 		model.setViewName("booking/totalShow");
 		return model;
@@ -129,13 +138,14 @@ public class BookSeatsController {
 	@GetMapping("/getShow")
 	public ModelAndView getMovieShowById(int id, ModelAndView model) {
 		Show show = bookSeatService.getShowById(id);
+		
 		model.addObject("show", show);
 		model.setViewName("booking/getShow");
 		return model;
 	}
 
 	@PostMapping("/bookT")
-	public ModelAndView bookSeats(@ModelAttribute("show") Show show, ModelAndView model, HttpServletRequest request,ModelMap map) {
+	public ModelAndView bookSeats(@ModelAttribute("show") Show show, ModelAndView model, HttpServletRequest request,ModelMap map) throws AddressException, MessagingException {
 		show = bookSeatService.getShowById(show.getId());
 		List<String> seats = new ArrayList<>();
 		if (show.getBookedSeats() != null) {
@@ -166,6 +176,7 @@ public class BookSeatsController {
 		int f=Integer.parseInt(request.getParameter("t"));
 		String[] bookedSeats = seats.stream().toArray(String[]::new);
 		int id=(int) map.get("id");
+		String email=(String) map.get("email");
 		User user=userService.getUserById(id);
 		UserBooked booked=new UserBooked();
 		booked.setUser(user);
@@ -177,6 +188,7 @@ public class BookSeatsController {
 		booked.setShow(show);
 		booked.setTotal(f);
 		bookService.save(booked);
+		emailService.ticketSendMail(show.getMovie().getName(),show.getScreen().getScreenName(), show.getDate(),show.getTime(), ubookedSeats, f, email);
 		bookSeatService.upShowById(show.getId(), bookedSeats);
 		System.out.println(seats);
 		System.out.println(ubSeats);
@@ -190,6 +202,7 @@ public class BookSeatsController {
 		model.addObject("name", details.getUsername());
 		model.addObject("id", details.getId());
 		model.addObject("role", details.getAuthorities());
+		model.addObject("email", details.getEmail());
 		List<Movie> list = movieService.getAllMovie();
 		model.addObject("list", list);
 		String imgString = null;
@@ -207,6 +220,11 @@ public class BookSeatsController {
 	public ModelAndView getDateWise(ModelAndView model, HttpServletRequest request) throws ParseException {
 		Date date = Date.valueOf(request.getParameter("date"));
 		List<Show> show = bookSeatService.getMovieByDate(Integer.parseInt(request.getParameter("id")), date);
+		
+		System.out.println(show);
+		if(show.isEmpty()) {
+			throw new ShowNotFoundException("no show found on the date of "+date);
+		}
 		model.addObject("show", show);
 		model.setViewName("booking/totalShow");
 		return model;

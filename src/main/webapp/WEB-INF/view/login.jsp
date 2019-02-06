@@ -28,52 +28,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
-<body>
-	<div class="container-fluid">
-		<div class="container">
-			<form method="POST" action="${contextPath}/login-process" class="">
-				<h2 class="form-heading">Log in</h2>
+<body class="text-center">
 
-				<div class="form-group ${error != null ? 'has-error' : ''}">
-					<span style="color: red;">${msg}</span> <div class="row">
-					<div class="col-md-1 field-label-responsive">
-						<label for="name">Name</label>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-								<div class="input-group-addon" style="width: 2.6rem">
-									<i class="fa fa-user"></i>
+	<div class="container pt-3">
+		<div class="row justify-content-sm-center">
+			<div class="col-sm-6 col-md-4">
+
+				<div class="card border-info text-center">
+					<div class="card-header">Log in</div>
+					<div class="card-body">
+						<form method="POST" action="${contextPath}/login-process"
+							class="form-signin">
+							<div class="form-group ${error != null ? 'has-error' : ''}">
+								<span style="color: red;">${msg}</span>
+								<div class="row">
+									<div class="col-md-1 field-label-responsive">
+										<label for="name">Name</label>
+									</div>
+									<div class="col-md-9">
+										<div class="form-group">
+											<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+												<div class="input-group-addon" style="width: 2.6rem">
+													<i class="fa fa-user"></i>
+												</div>
+												<input type="text" name="username" class="form-control"
+													autofocus="autofocus" required/>
+											</div>
+										</div>
+									</div>
+
 								</div>
-								<input type="text" name="username" class="form-control" autofocus="autofocus"/>
-							</div>
-						</div>
-					</div>
-					
-				</div> <div class="row">
-					<div class="col-md-1 field-label-responsive">
-						<label for="name">Password</label>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-								<div class="input-group-addon" style="width: 2.6rem">
-									<i class="fa fa-user"></i>
+								<div class="row">
+									<div class="col-md-1 field-label-responsive">
+										<label for="name">Password</label>
+									</div>
+									<div class="col-md-9">
+										<div class="form-group">
+											<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+												<div class="input-group-addon" style="width: 2.6rem">
+													<i class="fa fa-user"></i>
+												</div>
+												<input type="password" name="password" class="form-control" required />
+											</div>
+										</div>
+									</div>
 								</div>
-								<input type="password" name="password" class="form-control" />
+								<button class="btn btn-lg btn-primary " type="submit">Log
+									In</button>
 							</div>
-						</div>
+
+						</form>
 					</div>
-					
 				</div>
-
-					<button class="btn btn-lg btn-primary " type="submit">Log
-						In</button>
-				</div>
-
-			</form>
+				<a href="/user" class="float-right">Create an account </a>
+			</div>
 		</div>
 	</div>
+
 </body>
 
 </html>

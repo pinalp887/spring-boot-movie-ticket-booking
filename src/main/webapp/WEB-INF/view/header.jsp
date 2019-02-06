@@ -25,7 +25,8 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"
 	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 	crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -40,46 +41,55 @@
 			<c:choose>
 				<c:when test="${role == role1 }">
 					<ul class="navbar-nav ml-auto">
+						<li class="nav-item"><a class="nav-link" href="/logout"><i
+								class="fa fa-bullseye"></i> Log Out</i></a></li>
+					</ul>
+					<ul class="navbar-nav ml-auto">
 						<li class="nav-item"><a class="nav-link"
 							href="/movie/register"><i class="fa fa-plus"> Add Movie</i></a></li>
 					</ul>
 					<ul class="navbar-nav ml-auto">
 
-						<li class="nav-item"><a class="nav-link" href="/book/setShow"><i class="fa fa-floppy-o"> Set
-								movie Show</i></a></li>
+						<li class="nav-item"><a class="nav-link" href="/book/setShow"><i
+								class="fa fa-floppy-o"> Set movie Show</i></a></li>
 					</ul>
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item"><a class="nav-link" href="/screen/list"><i class="fa fa-folder-open">
-								Screens</i></a></li>
+						<li class="nav-item"><a class="nav-link" href="/screen/list"><i
+								class="fa fa-folder-open"> Screens</i></a></li>
 					</ul>
 
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item"><a class="nav-link" href="/movie/list"><i class="fa fa-list"> Movie
-								list</i></a></li>
+						<li class="nav-item"><a class="nav-link" href="/movie/list"><i
+								class="fa fa-list"> Movie list</i></a></li>
 					</ul>
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item"><a class="nav-link"
 							href="/book/datewise"><i class="fa fa-film"> Book Seats</i></a></li>
 					</ul>
 					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link"
-							href="/user/booked"><i class="fa fa-folder-open"> Booked Seats</i></a></li>
+						<li class="nav-item"><a class="nav-link" href="/user/booked"><i
+								class="fa fa-folder-open"> Booked Seats</i></a></li>
 					</ul>
 				</c:when>
 				<c:when test="${role == role2 }">
 					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link"
-							href="/book/datewise"><i class="fa fa-file-movie-o"> Book Seats</i></a></li>
+						<li class="nav-item"><a class="nav-link" href="/logout"><i
+								class="fa fa-bullseye"></i> Log Out</i></a></li>
 					</ul>
 					<ul class="navbar-nav">
 						<li class="nav-item"><a class="nav-link"
-							href="/user/booked"><i class="fa fa-folder-open"> Booked Seats</i></a></li>
+							href="/book/datewise"><i class="fa fa-file-movie-o"> Book
+									Seats</i></a></li>
+					</ul>
+					<ul class="navbar-nav">
+						<li class="nav-item"><a class="nav-link" href="/user/booked"><i
+								class="fa fa-folder-open"> Booked Seats</i></a></li>
 					</ul>
 				</c:when>
 			</c:choose>
 		</div>
 	</nav>
-	
-	
+
+
 </body>
 </html>

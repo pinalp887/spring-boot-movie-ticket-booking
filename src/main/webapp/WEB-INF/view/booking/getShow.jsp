@@ -87,7 +87,7 @@
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">Total
 								Seats:</label> <input type="number" class="form-control" id="seats"
-								autofocus="autofocus">
+								autofocus="autofocus" required>
 						</div>
 					</div>
 				</div>
@@ -197,7 +197,7 @@
 						<form:hidden path="date" />
 						<form:hidden path="movie.name" />
 						<%-- <form:hidden path="screen.screenName" /> --%>
-						<input type="hidden" name="t" id="t">
+						<input type="number" name="t" id="t">
 						<input type="submit" class="amount" id="save"
 							class="btn btn-sucess" value="save">
 					</form:form>
@@ -210,8 +210,6 @@
 </body>
 <script type="text/javascript">
 	$(document).ready(function() {
-		//countcheck();
-		//totalChecked();
 		$("#tickets").trigger('click');
 		$('#bookForm').hide();
 		$('#total').click(function() {
@@ -253,8 +251,6 @@
 				var t = checked * m2;
 				$("#t").val(t);
 			}
-			/* total = $('#totalseats').val();
-			checked = checked + 1; */
 
 		});
 		$('.gold').change(function() {
@@ -268,9 +264,6 @@
 				var t = checked * m3;
 				$("#t").val(t);
 			}
-			/* total = $('#totalseats').val();
-			checked = checked + 1; */
-
 		});
 		$('#save').click(function() {
 			if (totals < checked) {
@@ -285,37 +278,7 @@
 				console.log("done");
 			}
 		});
-
-		/* 	var count=0;
-			function countcheck(){
-				count=$("input[type='checkbox']").length;
-				console.log(count);
-			}
-			var checked=0;
-			function totalChecked(){
-				checked=$(".platinium").change(function(){
-					checked=checked+1;
-					alert(checked);
-				});
-				console.log(checked);
-			} */
-		$('#save').click(function() {
-
-		});
-
 	});
-	/* $('#Mybtn').click(function() {
-		$('#exampleModal').model('toggle');
-	}); */
 
-	/* $('.platinium').change(function(){
-			var val=$(this).val();
-			//alert(val);
-			var count=0;
-			for(var i=1;i<5;i++){
-				count++;
-				alert(count);
-			}
-		}); */
 </script>
 </html>

@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="../header.jsp" %>
+<%@ include file="../header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +15,7 @@
 </head>
 <body>
 	<div class="container-fluid"">
-		
+
 		<div class="row">
 			<div class="form-group">
 				<div class="col-md-6">
@@ -30,7 +30,7 @@
 				<label class="control-label col-sm-2" for="movieName">Movie
 					Name :</label>
 				<div class="col-sm-6">
-					<select name="movieName" class="col-sm-5 ">
+					<select name="movieName" class="col-sm-5 " required>
 						<option value=""></option>
 						<c:forEach items="${movie }" var="l">
 							<option value="${l.name}">${l.name }</option>
@@ -43,7 +43,7 @@
 				</label>
 				<div class="col-sm-6">
 					<input type="number" class="form-control" id="totalShow"
-						name="totalShow" >
+						name="totalShow" required>
 				</div>
 			</div>
 			<div class="form-group1"></div>
@@ -52,24 +52,24 @@
 				<div class="col-sm-6">
 
 					<form:input type="date" class="form-control" id="datetimepicker"
-						path="date" />
+						path="date" required />
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="screen">screen </label>
 				<div class="col-sm-6">
-					<select name="screen" class="col-sm-5">
+					<select name="screen" class="col-sm-5" required>
 						<option value=""></option>
 						<c:forEach items="${list }" var="l">
 							<option value="${l.id }">${l.screenName }</option>
 						</c:forEach>
-					<select>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-6">
 					<button type="submit" class="btn btn-default btn btn-success"
-						id="demo"><a href="">Submit</a></button>
+						id="demo">Submit</button>
 				</div>
 			</div>
 

@@ -31,7 +31,7 @@
 					:</label>
 				<div>
 					<input type="text" class="form-control amount"
-						id="platiniumSeats" name="platiniumSeats"  max="20" >
+						id="platiniumSeats" name="platiniumSeats" min="10"  max="20" required>
 				</div>
 			</div>
 			<div class="form-group" id="silverSeat">
@@ -39,7 +39,7 @@
 					:</label>
 				<div>
 					<input type="text" class="form-control amount"
-						id="silverSeats" name="silverSeats"  max="20" >
+						id="silverSeats" name="silverSeats" min="10" max="20" required>
 				</div>
 			</div>
 			<div class="form-group" id="goldSeats">
@@ -47,7 +47,7 @@
 					:</label>
 				<div>
 					<input type="text" class="form-control amount"
-						id="goldSeats" name="goldSeats"  max="20" >
+						id="goldSeats" name="goldSeats" min="10" max="20" required>
 				</div>
 			</div>
 			<div class="form-group">

@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.commons.codec.binary.Base64;
 import org.hibernate.engine.query.spi.ReturnMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,14 +29,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cignex.constant.Constant;
 import com.cignex.entities.Movie;
+import com.cignex.exception.MovieExceptions;
 import com.cignex.services.MovieService;
 
 @Controller
 @RequestMapping(value = Constant.MOVIE_CONTROLLER_REQUEST)
-@SessionAttributes({"name","id","role"})
+@SessionAttributes({ "name", "id", "role","email" })
 public class MovieController {
 	@Autowired
 	private MovieService movieService;
+
 	@GetMapping(value = Constant.HOME_PAGE_REQUEST)
 	private ModelAndView home(ModelAndView model) {
 		Movie movie = new Movie();
@@ -42,6 +46,7 @@ public class MovieController {
 		model.setViewName(Constant.MOVIE_REGISTER_JSP);
 		return model;
 	}
+
 	@GetMapping(value = Constant.REGISTER_REQUEST)
 	private ModelAndView register(ModelAndView model) {
 		Movie movie = new Movie();
@@ -49,8 +54,9 @@ public class MovieController {
 		model.setViewName(Constant.MOVIE_REGISTER_JSP);
 		return model;
 	}
+
 	@PostMapping(value = Constant.SAVE_REQUEST)
-	private ModelAndView addMovie(@ModelAttribute("movie") Movie movie, ModelAndView model,
+	private ModelAndView addMovie(@ModelAttribute Movie movie, ModelAndView model,
 			@RequestParam("file") MultipartFile[] files) throws IOException {
 		Path path = null;
 		String pathh = null;
@@ -79,9 +85,13 @@ public class MovieController {
 		model.setViewName(Constant.LIST_MOVIE_JSP);
 		return model;
 	}
+
 	@GetMapping(value = Constant.GET_BY_ID_REQUEST)
 	private ModelAndView getMovieById(@RequestParam("id") int id, ModelAndView model) {
 		Movie movie = movieService.getMovieById(id);
+		if (movie == null) {
+			throw new MovieExceptions.MovieNotFoundException("requested movie not found with id " + id);
+		}
 		model.addObject("movie", movie);
 		model.setViewName(Constant.UPDATE_MOVIE_JSP);
 		return model;
@@ -90,6 +100,9 @@ public class MovieController {
 	@GetMapping(value = Constant.DELETE_BY_ID_REQUEST)
 	private ModelAndView deleteMovie(@PathVariable("id") int id, ModelAndView model) {
 		Movie movie = movieService.getMovieById(id);
+		if (movie == null) {
+			throw new MovieExceptions.MovieNotFoundException("requested movie not found with id " + id);
+		}
 		File file = new File(movie.getMoviePath().toString());
 		file.delete();
 		movieService.delete(id);

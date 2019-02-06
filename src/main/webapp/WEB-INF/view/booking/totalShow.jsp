@@ -17,7 +17,7 @@
 <c:url value="/book/getShow" var="getShow">
 	<c:param name="id" value="${s.id }"></c:param>
 </c:url>
-<b><i>Book </i></b>
+<b><i class="fa fa-film">Book </i></b>
 <div>
 <%-- <a href="${getShow }" class="btn btn-success">${s.date } ${s.movie.name }</a> --%>
 <a href="${getShow }" class="btn btn-success">${s.time } ${s.movie.name }</a>

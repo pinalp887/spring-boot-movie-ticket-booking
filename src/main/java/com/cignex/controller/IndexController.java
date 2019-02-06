@@ -30,7 +30,7 @@ import com.cignex.services.UserService;
 
 @RestController
 @RequestMapping("/user")
-@SessionAttributes({"name","id","role"})
+@SessionAttributes({ "name", "id", "role","email" })
 public class IndexController {
 	@Autowired
 	private RoleService role_service;
@@ -62,6 +62,7 @@ public class IndexController {
 		eservice.sendmail(user.getName(), user.getEmail(), token);
 		user.setToken(token);
 		userService.save(user);
+		model.setViewName("redirect:/login");
 		return model;
 	}
 

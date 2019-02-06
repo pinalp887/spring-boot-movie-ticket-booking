@@ -24,7 +24,7 @@
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="name">Name :</label>
 				<div>
-					<form:input type="text" class="form-control" id="name" path="name" />
+					<form:input type="text" class="form-control" id="name" path="name"  />
 				</div>
 			</div>
 			<div class="form-group">

@@ -3,12 +3,15 @@ package com.cignex.services;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cignex.entities.Show;
+import com.cignex.exception.ShowNotFoundException;
 import com.cignex.repositories.BookSeatsRepository;
 
 @Service("bookSeatsService")
@@ -28,7 +31,12 @@ public class BookSeatsService {
 
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	public Show getShowById(int id) {
-		Show seats = bookSeatsRepository.getOne(id);
+		Show seats=null;
+		try {
+			seats = bookSeatsRepository.getOne(id);
+		} catch (EntityNotFoundException e) {
+				throw new ShowNotFoundException("There were no show founded with id "+id);
+		}
 		return seats;
 	}
 

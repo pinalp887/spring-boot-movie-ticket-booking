@@ -26,7 +26,7 @@ import com.cignex.services.ScreenService;
 
 @RestController
 @RequestMapping("/screen")
-@SessionAttributes({ "name", "id", "role" })
+@SessionAttributes({ "name", "id", "role","email" })
 public class ScreenController {
 	@Autowired
 	private ScreenService screenService;
@@ -85,7 +85,7 @@ public class ScreenController {
 	private ModelAndView getScreenById(@PathVariable("id") int id, ModelAndView model) {
 		Screen screen = screenService.getScreenById(id);
 		if (screen == null) {
-			throw new ScreenNotFoundException(" screen is not found with id " +id);
+			throw new ScreenNotFoundException(" screen is not found with id " + id);
 		}
 		model.addObject("screen", screen);
 		model.setViewName("screen/update");
@@ -95,6 +95,9 @@ public class ScreenController {
 	@GetMapping("/delete/{id}")
 	private ModelAndView deleteScreen(@PathVariable int id, ModelAndView model) {
 		Screen screen = screenService.getScreenById(id);
+		if (screen == null) {
+			throw new ScreenNotFoundException(" screen is not found with id " + id);
+		}
 		screenService.delete(screen);
 		model.setViewName("redirect:/screen/list");
 		return model;
